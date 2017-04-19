@@ -18,9 +18,9 @@ describe('configureStore', () => {
     });
   });
 
-  describe('runSaga', () => {
+  /*describe('runSaga', () => {
     it('should contain a hook for `sagaMiddleware.run`', () => {
       expect(typeof store.runSaga).toBe('function');
     });
-  });
+  });*/
 });

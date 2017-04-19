@@ -19,6 +19,7 @@ import {
 } from './constants';
 
 // The initial state of the App
+//TODO: immutable
 const initialState = fromJS({
   loading: false,
   error: false,

@@ -1,7 +1,14 @@
 import React from 'react';
 
 import Circle from './Circle';
-import Wrapper from './Wrapper';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  margin: 2em auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+`;
 
 const LoadingIndicator = () => (
   <Wrapper>
