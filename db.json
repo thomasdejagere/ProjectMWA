@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "username": "thomas",
+      "password": "test",
+      "firstname": "Thomas",
+      "lastname": "Dejagere",
+      "seenSeries": [
+        5
+      ],
+      "bookmarkedSeries": [
+        0
+      ],
+      "id": 1
+    }
+  ],
+  "series": [
+    {
+      "id": 1,
+      "title": "The Big Bang Theory",
+      "desc": "Description about The Big Bang Theory"
+    },
+    {
+      "id": 2,
+      "title": "House of Cards",
+      "desc": "Description about house of cards."
+    },
+    {
+      "id": 3,
+      "title": "Breaking Bad",
+      "desc": "Description about Breaking Bad."
+    },
+    {
+      "id": 4,
+      "title": "Six",
+      "desc": "Description about Six."
+    }
+  ]
+}

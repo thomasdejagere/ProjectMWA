@@ -6,14 +6,13 @@ import Toggle from 'components/Toggle';
 import messages from './messages';
 import { appLocales } from '../../i18n';
 import { changeLocale } from '../LanguageProvider/actions';
-import { makeSelectLocale } from '../LanguageProvider/selectors';import styled from 'styled-components';
+import { makeSelectLocale } from '../LanguageProvider/selectors';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   padding: 2px;
 `;
 
-
-//TODO: change the select to react-select => NO FREAKING <option> selects
 export class LocaleToggle extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (

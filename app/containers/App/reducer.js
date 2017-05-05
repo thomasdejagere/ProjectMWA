@@ -10,41 +10,34 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import { fromJS } from 'immutable';
-
-import {
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS,
-  LOAD_REPOS_ERROR,
-} from './constants';
+import { Map, List } from 'immutable';
+import types from './constants';
 
 // The initial state of the App
 //TODO: immutable
-const initialState = fromJS({
-  loading: false,
-  error: false,
-  currentUser: false,
-  userData: {
-    repositories: false,
-  },
+const initialState = Map({
+  selectedSerie: Map(),
+  user: Map(
+    {
+      "id": 1,
+  "username": "thomas",
+  "password": "test",
+  "firstname": "Thomas",
+  "lastname": "Dejagere",
+  "seenSeries": [5],
+  "bookmarkedSeries": [0]
+}
+  )
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_REPOS:
-      return state
-        .set('loading', true)
-        .set('error', false)
-        .setIn(['userData', 'repositories'], false);
-    case LOAD_REPOS_SUCCESS:
-      return state
-        .setIn(['userData', 'repositories'], action.repos)
-        .set('loading', false)
-        .set('currentUser', action.username);
-    case LOAD_REPOS_ERROR:
-      return state
-        .set('error', action.error)
-        .set('loading', false);
+    case types.SELECT_SERIE:
+      return state.setIn(['selectedSerie'], Map(action.item));
+    case types.BOOKMARK_SERIE:
+      return state.setIn(['user', 'bookmarkedSeries'], state.get('user').get('bookmarkedSeries').push(action.id));
+    case types.SEEN_SERIE:
+      return state.setIn(['user', 'seenSeries'], state.get('user').get('seenSeries').push(action.id));
     default:
       return state;
   }

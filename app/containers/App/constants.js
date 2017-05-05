@@ -9,7 +9,24 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
-export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
-export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
-export const DEFAULT_LOCALE = 'en';
+import {
+  prefixObjectValues
+} from '../../utils';
+
+export const PREFIX = "@@GLOBAL/";
+
+let types = {
+    SELECT_SERIE: "SELECT_SERIE",
+    REQUEST_SAVE_SEEN: "REQUEST_SAVE_SEEN",
+    RECEIVE_SAVE_SEEN: "RECEIVE_SAVE_SEEN",
+    FAILURE_SAVE_SEEN: "FAILURE_SAVE_SEEN",
+
+    REQUEST_SAVE_BOOKMARKED: "REQUEST_SAVE_BOOKMARKED",
+    RECEIVE_SAVE_BOOKMARKED: "RECEIVE_SAVE_BOOKMARKED",
+    FAILURE_SAVE_BOOKMARKED: "FAILURE_SAVE_BOOKMARKED",
+
+    BOOKMARK_SERIE: "BOOKMARK_SERIE",
+    SEEN_SERIE: "SEEN_SERIE"
+};
+
+export default prefixObjectValues(types, PREFIX);

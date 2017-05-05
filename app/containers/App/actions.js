@@ -14,9 +14,57 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
-
+import types from './constants';
 import {
-  LOAD_REPOS,
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS_ERROR,
-} from './constants';
+  CALL_API
+} from 'redux-api-middleware';
+
+export function selectSerie(item) {
+  return {
+    type: types.SELECT_SERIE,
+    item
+  }
+}
+
+//TODO get id of the logged in user
+export function saveUserInformation(user) {
+  return (dispatch) => {
+    dispatch(
+      {
+      [CALL_API]: {
+        endpoint: 'http://localhost:4444/users/' + user.id,
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {"Content-Type": "application/json"},
+        types: [types.REQUEST_SAVE_SEEN, types.RECEIVE_SAVE_SEEN, types.FAILURE_SAVE_SEEN]
+      }
+    }
+  )
+  }
+}
+
+export function bookmarkSerie(id) {
+  return (getState, dispatch) => {
+    console.log("getState");
+    console.log(getState());
+    let userInformation = getState().get('global').get('user').toJS();
+    userInformation.bookmarkedSeries.append(id);
+    dispatch(saveUserInformation(userInformation));
+    return {
+      type: types.BOOKMARK_SERIE,
+      id
+    }
+  }
+}
+
+export function seenSerie(id) {
+  return (getState, dispatch) => {
+    let userInformation = getState().get('global').get('user').toJS();
+    userInformation.seenSeries.append(id);
+    dispatch(saveUserInformation(userInformation));
+    return {
+      type: types.SEEN_SERIE,
+      id
+    }
+  }
+}

@@ -2,14 +2,17 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import Button from 'components/Button';
+import styled from 'styled-components';
+import {push} from 'react-router-redux';
 
 export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
   componentDidMount() {
-
   }
 
   render() {
+    const {routeToSearchPage} = this.props;
+
     return (
       <article>
         <Helmet
@@ -18,29 +21,64 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
             { name: 'description', content: 'A React.js Boilerplate application homepage' },
           ]}
         />
-        <div>
-          DIT IS EEN TEST
-        </div>
+        <ButtonsDiv>
+          <ButtonDiv>
+            <Button
+              text="  Search"
+              icon="search"
+              size="large"
+              onClick={routeToSearchPage}
+            />
+          </ButtonDiv>
+          <ButtonDiv>
+            <Button
+              text="  Bookmarks"
+              icon="heart"
+              size="large"
+            />
+          </ButtonDiv>
+          <ButtonDiv>
+            <Button
+              text="  Seen"
+              icon="eye-open"
+              size="large"
+            />
+          </ButtonDiv>
+          <ButtonDiv>
+            <Button
+              text="  Updates"
+              icon="refresh"
+              size="large"
+            />
+          </ButtonDiv>
+        </ButtonsDiv>
+        <p></p>
       </article>
     );
   }
 }
+
+
+const ButtonsDiv = styled.div`
+  padding: 2px;
+`;
+
+const ButtonDiv = styled.div`
+  padding: 2px;
+`;
+
+
 
 HomePage.propTypes = {
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    /*onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-    },*/
+    routeToSearchPage: () => dispatch(push('/search'))
   };
 }
 
 const mapStateToProps = createStructuredSelector({
-
 });
 
 // Wrap the component to inject dispatch and state into it

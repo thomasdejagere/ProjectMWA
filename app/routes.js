@@ -35,7 +35,33 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
+    },{
+      path: '/search',
+      name: 'search',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+        import('containers/SearchPage/reducer'),
+        import('containers/SearchPage'),
+      ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('search', reducer.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
     }, {
+      path: '/search/:id',
+      name: 'detail',
+      getComponent(nextState, cb) {
+        import('containers/DetailPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    },{
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

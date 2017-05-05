@@ -58,6 +58,13 @@ module.exports = (options) => ({
       query: {
         limit: 10000,
       },
+    }, {
+      test: /.jsx?$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      query: {
+        presets: ['es2015', 'react']
+      }
     }],
   },
   plugins: options.plugins.concat([
