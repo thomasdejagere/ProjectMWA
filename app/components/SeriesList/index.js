@@ -16,15 +16,18 @@ class SeriesList extends React.Component {
       <div>
         <ListGroup componentClass="ul">
           { items.map((item) => {
-            return (<SerieItem
-              key={item.id}
-              onClick={this.onClick.bind(this, item)}
-              onBookmark={onBookmark}
-              onSeen={onSeen}
-              enableBookmarkFunc={enableBookmarkFunc}
-              enableSeenFunc={enableSeenFunc}
-              item={item}/>)
-          })}
+            if (item && typeof item.id !== "undefined") {
+              return (<SerieItem
+                key={item.id}
+                onClick={this.onClick.bind(this, item)}
+                onBookmark={onBookmark}
+                onSeen={onSeen}
+                enableBookmarkFunc={enableBookmarkFunc}
+                enableSeenFunc={enableSeenFunc}
+                item={item}/>)
+            }
+            })
+          }
         </ListGroup>
       </div>
     )

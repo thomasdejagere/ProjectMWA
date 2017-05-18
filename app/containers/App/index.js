@@ -10,6 +10,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import Header from 'components/Header';
+import {authenticateApi} from './actions';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -21,8 +22,6 @@ const AppWrapper = styled.div`
 `;
 
 export function App(props) {
-  //authenticate action
-  //work with promise => when its finished show the application, when its not show the loading screen
   return (
     <AppWrapper>
       <Helmet

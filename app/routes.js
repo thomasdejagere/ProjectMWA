@@ -35,7 +35,46 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
-    },{
+    },
+    {
+      path: '/login',
+      name: 'login',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/LoginPage/reducer'),
+          import('containers/LoginPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('login', reducer.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+        import('containers/App/reducer'),
+        import('containers/RegisterPage'),
+      ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('search', reducer.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    },
+    {
       path: '/search',
       name: 'search',
       getComponent(nextState, cb) {
@@ -60,6 +99,42 @@ export default function createRoutes(store) {
         import('containers/DetailPage')
           .then(loadModule(cb))
           .catch(errorLoading);
+      },
+    },{
+      path: '/seen',
+      name: 'seen',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+        import('containers/SearchPage/reducer'),
+        import('containers/SearchPage'),
+      ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('search', reducer.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    },{
+      path: '/bookmarked',
+      name: 'bookmarked',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+        import('containers/SearchPage/reducer'),
+        import('containers/SearchPage'),
+      ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('search', reducer.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
       },
     },{
       path: '*',

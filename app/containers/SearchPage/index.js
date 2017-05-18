@@ -1,8 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import {bookmarkSerie, seenSerie} from '../app/actions';
-import {isInit, fetchSeries, querySeries} from './actions';
-import {connect} from 'react-redux';
+import {isInit, fetchSeries, querySeries, bookmarkSerieLocal, seenSerieLocal} from './actions';
+import {connect} from 'react-redux'
 import SerieList from 'components/SeriesList';
 import {FormGroup, FormControl} from 'react-bootstrap';
 import {push} from 'react-router-redux';
@@ -12,6 +11,7 @@ let timeout = null;
 export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
+    console.log("searchpage constructor");
     this.state = {
       preventShowDetailPage: false
     }
@@ -19,25 +19,21 @@ export class SearchPage extends React.Component {
 
   componentWillMount() {
     const {dispatch} = this.props;
-    dispatch(fetchSeries());
+    if (!this.props.isAuthenticated) {
+      dispatch(push('/login'));
+    } else {
+      dispatch(fetchSeries());
+    }
   }
 
   onBookmark(selectedSerie) {
-    console.log("bookmarked: ", selectedSerie);
     const {dispatch} = this.props;
-    dispatch(bookmarkSerie(selectedSerie.id))
-    this.setState({
-      preventShowDetailPage: true
-    });
+    dispatch(bookmarkSerieLocal(selectedSerie.id))
   }
 
-  onSeen(arg1) {
-    console.log("seen: ", arg1);
+  onSeen(selectedSerie) {
     const {dispatch} = this.props;
-    dispatch(seenSerie(selectedSerie.id));
-    this.setState({
-      preventShowDetailPage: true
-    })
+    dispatch(seenSerieLocal(selectedSerie.id));
   }
 
   showDetailPage(item) {
@@ -84,9 +80,14 @@ export class SearchPage extends React.Component {
     )
   }
 }
+
 const mapStateToProps = (state) => {
+  let series = state.get('search').get('series').get('queriedSeries');
+  console.log("series");
+  console.log(series);
   return {
-    series: state.get('search').get('series').get('queriedSeries')
+    series,
+    isAuthenticated: state.get('global').get('isAuthenticated')
   }
 };
 

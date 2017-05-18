@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+let SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -82,6 +83,16 @@ module.exports = (options) => ({
       },
     }),
     new webpack.NamedModulesPlugin(),
+    new SWPrecacheWebpackPlugin(
+      {
+        cacheId: 'TheTVGuru',
+        filename: 'my-service-worker.js',
+        runtimeCaching: [{
+          handler: 'cacheFirst',
+          urlPattern: '/',
+        }],
+      }
+    ),
   ]),
   resolve: {
     modules: ['app', 'node_modules'],

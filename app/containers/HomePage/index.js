@@ -5,13 +5,21 @@ import { createStructuredSelector } from 'reselect';
 import Button from 'components/Button';
 import styled from 'styled-components';
 import {push} from 'react-router-redux';
+import {logoutUser, showOnlySeen, showOnlyBookmarked, showAll} from '../app/actions';
 
 export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
+  componentWillMount() {
+    if (!this.props.isAuthenticated) {
+      this.props.routeToLogin();
+    }
+  }
+
+  logout() {
+    this.props.logout();
   }
 
   render() {
-    const {routeToSearchPage} = this.props;
+    const {routeToSearchPage, routeToSeenPage, routeToBookmarkedPage, logout} = this.props;
 
     return (
       <article>
@@ -35,6 +43,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
               text="  Bookmarks"
               icon="heart"
               size="large"
+              onClick={routeToBookmarkedPage}
             />
           </ButtonDiv>
           <ButtonDiv>
@@ -42,6 +51,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
               text="  Seen"
               icon="eye-open"
               size="large"
+              onClick={routeToSeenPage}
             />
           </ButtonDiv>
           <ButtonDiv>
@@ -49,6 +59,13 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
               text="  Updates"
               icon="refresh"
               size="large"
+            />
+          </ButtonDiv>
+          <ButtonDiv>
+            <Button
+              text="  Logout"
+              size="large"
+              onClick={logout}
             />
           </ButtonDiv>
         </ButtonsDiv>
@@ -74,12 +91,31 @@ HomePage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    routeToSearchPage: () => dispatch(push('/search'))
+    routeToSearchPage: () => {
+      dispatch(showAll());
+      dispatch(push('/search'))
+    },
+    routeToLogin: () => dispatch(push('/login')),
+    logout: () => {
+      dispatch(dispatch(push('/login')));
+      dispatch(logoutUser());
+    },
+    routeToSeenPage: () =>  {
+      dispatch(showOnlySeen());
+      dispatch(push('/seen'));
+    },
+    routeToBookmarkedPage: () =>  {
+      dispatch(showOnlyBookmarked());
+      dispatch(push('/bookmarked'));
+    }
   };
 }
 
-const mapStateToProps = createStructuredSelector({
-});
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.get('global').get('isAuthenticated')
+  }
+}
 
 // Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

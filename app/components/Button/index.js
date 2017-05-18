@@ -7,7 +7,7 @@ class MyButton extends React.Component{
   }
 
   render() {
-    const {size = "medium", style = "primary", icon = null, text = "", onClick} = this.props;
+    const {size = "sm", style = "primary", icon = null, text = "", onClick} = this.props;
 
     return (
       <div>

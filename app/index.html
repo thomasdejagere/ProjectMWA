@@ -16,6 +16,11 @@
 
     <!-- The app hooks into this div -->
     <div id="app"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('my-service-worker.js');
+      }
+    </script>
     <!-- Open Sans Font -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">

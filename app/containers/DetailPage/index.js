@@ -4,6 +4,12 @@ import Button from 'components/Button';
 import {push} from 'react-router-redux';
 
 class DetailPage extends React.Component {
+  componentWillMount() {
+    if (!this.props.isAuthenticated) {
+      this.props.routeToLogin();
+    }
+  }
+
   render() {
     const {serie, routeToSearchPage} = this.props;
 
@@ -17,8 +23,10 @@ class DetailPage extends React.Component {
           onClick={routeToSearchPage}
         />
 
-        id: {this.props.params.id}
-        Description: {serie.desc}
+        <p>id: {this.props.params.id}</p>
+        <p>Description: {serie.desc}</p>
+        <p>Seen: {serie.seen ? "true" : "false"}</p>
+        <p>Bookmarked: {serie.bookmarked ? "true": "false"}</p>
       </div>
 
     )
@@ -30,13 +38,15 @@ DetailPage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    routeToSearchPage: () => dispatch(push('/search'))
+    routeToSearchPage: () => dispatch(push('/search')),
+    routeToLogin: () => dispatch(push('/login'))
   };
 }
 
 const mapStateToProps = (state) => {
   return {
-    serie: state.get('global').get('selectedSerie').toJS()
+    serie: state.get('global').get('selectedSerie').toJS(),
+    isAuthenticated: state.get('global').get('isAuthenticated')
   }
 };
 

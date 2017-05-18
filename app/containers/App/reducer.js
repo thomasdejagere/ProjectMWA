@@ -17,17 +17,11 @@ import types from './constants';
 //TODO: immutable
 const initialState = Map({
   selectedSerie: Map(),
-  user: Map(
-    {
-      "id": 1,
-  "username": "thomas",
-  "password": "test",
-  "firstname": "Thomas",
-  "lastname": "Dejagere",
-  "seenSeries": [5],
-  "bookmarkedSeries": [0]
-}
-  )
+  isAuthenticated: false,
+  authenticationError: "",
+  user: Map(),
+  showOnlyBookmarked: false,
+  showOnlySeen: false
 });
 
 function appReducer(state = initialState, action) {
@@ -38,6 +32,21 @@ function appReducer(state = initialState, action) {
       return state.setIn(['user', 'bookmarkedSeries'], state.get('user').get('bookmarkedSeries').push(action.id));
     case types.SEEN_SERIE:
       return state.setIn(['user', 'seenSeries'], state.get('user').get('seenSeries').push(action.id));
+    case types.RECEIVE_SAVE_USER_INFO:
+      return state.setIn(['user'], Map(action.payload));
+    case types.REQUEST_AUTH:
+      return state.setIn(['isAuthenticated'], false);
+    case types.RECEIVE_AUTH:
+      return state.setIn(['isAuthenticated'], true).setIn(['user'], Map(action.payload));
+    case types.LOGOUT_USER:
+      return state.setIn(['isAuthenticated'], false).setIn(['user'], Map());
+    case types.SHOW_ONLY_SEEN:
+      return state.setIn(['showOnlySeen'], true).setIn(['showOnlyBookmarked'], false);
+    case types.SHOW_ONLY_BOOKMARKED:
+      return state.setIn(['showOnlyBookmarked'], true).setIn(['showOnlySeen'], false);;
+    case types.SHOW_ALL:
+      return state.setIn(['showOnlySeen'], false).setIn(['showOnlyBookmarked'], false);
+
     default:
       return state;
   }
